@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.UserDAO">
+
+    <resultMap id="userResultMap" type="com.example.demo.model.dataobject.UserDO">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
+        <result column="password" property="password"/>
+    </resultMap>
+    <sql id="base">user_id,user_name, password</sql>
+    <insert id="batchAdd" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO users
+        <include refid="base"/>
+        VALUES
+        <foreach collection="list" item="it" index="index" separator=",">
+            (#{it.userId},#{it.userName}, #{it.password})
+        </foreach>
+    </insert>
+
+
+    <insert id="add" parameterType="com.example.demo.model.dataobject.UserDO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO users
+        (<include refid="base"/>)
+        VALUES(#{userId},#{userName}, #{password})
+    </insert>
+
+<!--    <update id="update" parameterType="com.example.demo.model.dataobject.UserDO">-->
+<!--        update user-->
+<!--        <set>-->
+<!--            <if test="nickName != null">-->
+<!--                nick_name=#{nickName},-->
+<!--            </if>-->
+<!--        </set>-->
+<!--        gmt_modified=now()-->
+<!--        where id=#{id}-->
+<!--    </update>-->
+
+    <delete id="delete">
+        delete from users where user_id=#{userId}
+    </delete>
+
+    <select id="findAll" resultMap="userResultMap">
+        select * from users
+    </select>
+
+    <select id="findByUserName" resultMap="userResultMap">
+        select
+        <include refid="base"></include>
+        from users where user_name=#{userName} limit 1
+    </select>
+
+<!--    <select id="query" resultMap="userResultMap">-->
+<!--        select * from users where user_name like CONCAT('%',#{keyWord},'%')-->
+<!--    </select>-->
+
+<!--    <select id="search" resultMap="userResultMap">-->
+<!--        select * from users-->
+<!--        <where>-->
+<!--            <if test="keyWord != null">-->
+<!--                user_name like CONCAT('%',#{keyWord},'%')-->
+<!--                or nick_name like CONCAT('%',#{keyWord},'%')-->
+<!--            </if>-->
+<!--            <if test="startTime != null">-->
+<!--                and gmt_created <![CDATA[ >= ]]> #{startTime}-->
+<!--            </if>-->
+<!--            <if test="endTime != null">-->
+<!--                and gmt_created <![CDATA[ <= ]]> #{endTime}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
+
+    <select id="findByIds" resultMap="userResultMap">
+        select
+        <include refid="base"></include>
+        from users
+        <where>
+            userId in
+            <foreach item="item" index="index" collection="ids"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
+    </select>
+
+</mapper>

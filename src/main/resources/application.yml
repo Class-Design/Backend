@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://122.51.216.103:3306/book-admin?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=true
+    username: admin
+    password: 123456 # 你的数据库密码
+  data:
+    redis:
+      host: 81.70.240.186
+      port: 6379
+      password: 114514
+mybatis:
+  mapper-locations: classpath:com/example/demo/dao/*.xml

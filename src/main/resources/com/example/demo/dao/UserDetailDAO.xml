@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.UserDetailDAO">
+    <resultMap id="userDetailResultMap" type="com.example.demo.model.dataobject.UserDetailDO">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="class" property="classs"/>
+        <result column="name" property="name"/>
+        <result column="sex" property="sex"/>
+        <result column="location" property="location"/>
+        <result column="mobile" property="mobile"/>
+        <result column="age" property="age"/>
+    </resultMap>
+    <sql id="base">user_id,class,name,sex,location,mobile,age</sql>
+    <sql id="value">#{userId},#{classs},#{name},#{sex},#{location},#{mobile},#{age}</sql>
+    <select id="selectByUserId" resultMap="userDetailResultMap">
+        select
+            id,<include refid="base"></include>
+        from user_details
+        <where>
+            user_id=#{userId}
+        </where>
+        limit 1
+    </select>
+    <insert id="add" parameterType="com.example.demo.model.dataobject.UserDetailDO" useGeneratedKeys="true" keyProperty="id">
+        insert into user_details
+        (<include refid="base"></include>)
+        values
+        (<include refid="value"></include>)
+    </insert>
+</mapper>
