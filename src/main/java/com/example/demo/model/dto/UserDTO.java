@@ -11,6 +11,7 @@ import org.springframework.beans.BeanUtils;
  */
 @Data
 public class UserDTO {
+    String userId;
     String userName;
     String password;
     String classs;

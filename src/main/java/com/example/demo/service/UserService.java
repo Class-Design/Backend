@@ -19,7 +19,7 @@ public interface UserService {
      * @param userDTO
      * @return
      */
-    public Result<UserGeneral> register(UserDTO userDTO);
+    Result<UserGeneral> register(UserDTO userDTO);
 
     /**
      * 执行登录逻辑，登录成功返回 User 对象
@@ -28,15 +28,15 @@ public interface UserService {
      * @param pwd
      * @return
      */
-    public Result<UserGeneral> login(String userName, String pwd);
+    Result<UserGeneral> login(String userName, String pwd);
 
     /**
      * 获取多个用户信息
      *
-     * @param userIds  查询参数
+     * @param userIds 查询参数
      * @return
      */
-    public List<UserDO> queryUser(List<Long> userIds);
+    List<UserDO> queryUser(List<Long> userIds);
 
     /**
      * 判断是否登录
@@ -44,5 +44,5 @@ public interface UserService {
      * @param request
      * @return
      */
-    public Boolean checkLogin(HttpServletRequest request);
+    Boolean checkLogin(HttpServletRequest request);
 }
