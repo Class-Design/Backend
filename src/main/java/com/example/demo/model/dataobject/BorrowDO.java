@@ -8,7 +8,7 @@ import lombok.Data;
  */
 @Data
 public class BorrowDO {
-    Integer id;
     String bookId;
     String userId;
+    String detailId;
 }

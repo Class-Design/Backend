@@ -6,6 +6,7 @@ import com.example.demo.dao.UserDetailDAO;
 import com.example.demo.model.dataobject.AuthorityDO;
 import com.example.demo.model.dataobject.UserDO;
 import com.example.demo.model.dataobject.UserDetailDO;
+import com.example.demo.model.dto.AuthorityDTO;
 import com.example.demo.model.dto.UserDTO;
 import com.example.demo.model.pojo.Result;
 import com.example.demo.model.pojo.UserGeneral;
@@ -131,13 +132,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean checkLogin(HttpServletRequest request) {
-        Object userId = request.getSession().getAttribute("userId");
+    public AuthorityDTO checkLogin(HttpServletRequest request) {
+        String userId = (String)request.getSession().getAttribute("userId");
         if (userId == null) {
-            return false;
+            return null;
         } else {
-            return true;
+            AuthorityDTO authorityDTO=new AuthorityDTO();
+            authorityDTO.setUserId(userId);
+            authorityDTO.setAuthority(authorityDAO.selectByUserId(userId).getAuthority());
+            return authorityDTO;
         }
+
+
     }
 
     public UserGeneral getUserGeneral(String userId){

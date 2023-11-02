@@ -4,9 +4,11 @@ import com.example.demo.dao.BookDAO;
 import com.example.demo.model.dataobject.BookDO;
 import com.example.demo.model.dataobject.BookDetailDO;
 import com.example.demo.model.dto.BookDTO;
+import com.example.demo.model.dto.BookDetailDTO;
 import com.example.demo.model.pojo.Result;
 import com.example.demo.service.BookService;
 import com.example.demo.utils.UUIDUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -45,11 +47,35 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Result<Integer> updateBook(BookDTO bookDTO) {
-        return null;
+        Result<Integer> result=new Result<>();
+        if (StringUtils.isEmpty(bookDTO.getBookId())){
+            result.setCode("400");
+            result.setData(0);
+            result.setMessage("未选择正确的书籍");
+            result.setSuccess(false);
+            return result;
+        }
+        Integer hasChange=bookDAO.updateBook(bookDTO.toDO());
+        result.setCode("200");
+        result.setData(hasChange);
+        result.setSuccess(true);
+        return result;
     }
 
     @Override
-    public Result<Integer> updateBookDetail(String detailId) {
-        return null;
+    public Result<Integer> updateBookDetail(BookDetailDTO bookDetailDTO) {
+        Result<Integer> result=new Result<>();
+        if (StringUtils.isEmpty(bookDetailDTO.getDetailId())){
+            result.setCode("400");
+            result.setData(0);
+            result.setMessage("未选择正确的书本");
+            result.setSuccess(false);
+            return result;
+        }
+        Integer hasChange=bookDAO.updateBookDetail(bookDetailDTO.toDO());
+        result.setCode("200");
+        result.setData(hasChange);
+        result.setSuccess(true);
+        return result;
     }
 }

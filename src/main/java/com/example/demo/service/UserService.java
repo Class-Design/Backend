@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.model.dataobject.UserDO;
+import com.example.demo.model.dto.AuthorityDTO;
 import com.example.demo.model.dto.UserDTO;
 import com.example.demo.model.pojo.Result;
 import com.example.demo.model.pojo.UserGeneral;
@@ -44,5 +45,5 @@ public interface UserService {
      * @param request
      * @return
      */
-    Boolean checkLogin(HttpServletRequest request);
+    AuthorityDTO checkLogin(HttpServletRequest request);
 }

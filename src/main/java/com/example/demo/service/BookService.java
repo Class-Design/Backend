@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.model.dataobject.BookDO;
 import com.example.demo.model.dto.BookDTO;
+import com.example.demo.model.dto.BookDetailDTO;
 import com.example.demo.model.pojo.Result;
 import org.springframework.data.relational.core.sql.In;
 
@@ -19,7 +20,7 @@ public interface BookService {
 
     /**
      * 创建某具体书籍
-     * @param bookDO
+     * @param bookId
      * @return
      */
     Integer addBookDetail(String bookId);
@@ -33,8 +34,8 @@ public interface BookService {
 
     /**
      * 更新具体书籍
-     * @param detailId
+     * @param bookDetailDTO
      * @return
      */
-    Result<Integer> updateBookDetail(String detailId);
+    Result<Integer> updateBookDetail(BookDetailDTO bookDetailDTO);
 }

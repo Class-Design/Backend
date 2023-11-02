@@ -4,6 +4,7 @@ import com.example.demo.dao.UserDAO;
 import com.example.demo.dao.UserDetailDAO;
 import com.example.demo.model.dataobject.UserDO;
 import com.example.demo.model.dataobject.UserDetailDO;
+import com.example.demo.model.dto.AuthorityDTO;
 import com.example.demo.model.dto.UserDTO;
 import com.example.demo.model.pojo.Paging;
 import com.example.demo.model.pojo.Result;
@@ -117,10 +118,10 @@ public class UserController {
         return result;
     }
     @GetMapping("/user/checklogin")
-    public Result<Boolean> login(HttpServletRequest request){
+    public Result<AuthorityDTO> checkLogin(HttpServletRequest request){
         Result result = new Result();
-
         result.setSuccess(true);
+        result.setCode("200");
         result.setData(userService.checkLogin(request));
         return result;
     }
