@@ -1,12 +1,15 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.dao.BorrowDAO;
+import com.example.demo.dao.ReserveDAO;
 import com.example.demo.model.dataobject.BookDetailDO;
 import com.example.demo.model.dataobject.BorrowDO;
+import com.example.demo.model.dataobject.ReserveDO;
 import com.example.demo.model.dto.BookDTO;
 import com.example.demo.model.dto.BookDetailDTO;
 import com.example.demo.model.pojo.Result;
 import com.example.demo.service.BorrowService;
+import com.example.demo.service.ReserveService;
 import com.example.demo.utils.UUIDUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
@@ -25,7 +28,12 @@ public class BorrowServiceImpl implements BorrowService {
     private RedissonClient redisson;
 
     @Autowired
+    private ReserveDAO reserveDAO;
+
+    @Autowired
     private BorrowDAO borrowDAO;
+    @Autowired
+    private ReserveService reserveService;
     RLock borrowLock = redisson.getLock("bookBorrow");
     RLock returnLock = redisson.getLock("bookReturn");
 
@@ -72,6 +80,8 @@ public class BorrowServiceImpl implements BorrowService {
             //解锁
             borrowLock.unlock();
         }
+        ReserveDO reserveDO=new ReserveDO(bookDTO.getBookId(),userId);
+        reserveDAO.delete(reserveDO);
         result.setCode("200");
         result.setData(reserve);
         result.setMessage("书籍借出成功");
@@ -114,6 +124,7 @@ public class BorrowServiceImpl implements BorrowService {
         }finally {
             returnLock.unlock();
         }
+        reserveService.notice(bookDetailDTO.getBookId());
         result.setCode("200");
         result.setMessage("还书成功");
         result.setSuccess(true);
