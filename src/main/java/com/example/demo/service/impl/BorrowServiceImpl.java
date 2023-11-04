@@ -11,6 +11,8 @@ import com.example.demo.model.pojo.Result;
 import com.example.demo.service.BorrowService;
 import com.example.demo.service.ReserveService;
 import com.example.demo.utils.UUIDUtils;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RLock;
@@ -24,7 +26,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class BorrowServiceImpl implements BorrowService {
-    @Autowired
+    @Resource
     private RedissonClient redisson;
 
     @Autowired
@@ -34,9 +36,13 @@ public class BorrowServiceImpl implements BorrowService {
     private BorrowDAO borrowDAO;
     @Autowired
     private ReserveService reserveService;
-    RLock borrowLock = redisson.getLock("bookBorrow");
-    RLock returnLock = redisson.getLock("bookReturn");
-
+    RLock borrowLock;
+    RLock returnLock;
+    @PostConstruct
+    private void init(){
+        borrowLock = redisson.getLock("bookBorrow");
+        returnLock = redisson.getLock("bookReturn");
+    }
     @Override
     public Result<BookDetailDO> borrowBook(BookDTO bookDTO, HttpServletRequest request) {
         Result<BookDetailDO> result = new Result();

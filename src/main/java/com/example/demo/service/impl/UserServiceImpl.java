@@ -132,17 +132,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public AuthorityDTO checkLogin(HttpServletRequest request) {
-        String userId = (String)request.getSession().getAttribute("userId");
-        if (userId == null) {
-            return null;
-        } else {
-            AuthorityDTO authorityDTO=new AuthorityDTO();
-            authorityDTO.setUserId(userId);
-            authorityDTO.setAuthority(authorityDAO.selectByUserId(userId).getAuthority());
-            return authorityDTO;
-        }
+    public Result<UserGeneral> getInfo(HttpServletRequest request) {
+        Result<UserGeneral> result=new Result<>();
+        String userId=(String)request.getSession().getAttribute("userId");
+        UserDetailDO userDetailDO= userDetailDAO.selectByUserId(userId);
+        AuthorityDO authorityDO=authorityDAO.selectByUserId(userId);
+        UserGeneral userGeneral=new UserGeneral();
+        userGeneral.setUserDetail(userDetailDO);
+        userGeneral.setAuthority(authorityDO);
+        result.setSuccess(true);
+        result.setCode("200");
+        result.setData(userGeneral);
+        return result;
+    }
 
+    @Override
+    public Boolean checkLogin(HttpServletRequest request) {
+        Object userId = request.getSession().getAttribute("userId");
+        if (userId == null) {
+            return false;
+        } else {
+            return true;
+        }
 
     }
 

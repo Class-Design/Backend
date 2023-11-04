@@ -10,11 +10,13 @@ import com.example.demo.service.BookService;
 import com.example.demo.utils.UUIDUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author fireinsect
  * @create 2023/11/1
  */
+@Service
 public class BookServiceImpl implements BookService {
     @Autowired
     BookDAO bookDAO;

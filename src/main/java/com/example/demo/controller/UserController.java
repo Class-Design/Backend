@@ -113,12 +113,17 @@ public class UserController {
     public Result logout(HttpServletRequest request) {
         Result result = new Result();
         request.getSession().removeAttribute("userId");
-
+        result.setCode("200");
         result.setSuccess(true);
+        result.setMessage("退出成功");
         return result;
     }
+    @GetMapping("/user/info")
+    public Result<UserGeneral> getUserInfo(HttpServletRequest request){
+        return userService.getInfo(request);
+    }
     @GetMapping("/user/checklogin")
-    public Result<AuthorityDTO> checkLogin(HttpServletRequest request){
+    public Result<Boolean> checkLogin(HttpServletRequest request){
         Result result = new Result();
         result.setSuccess(true);
         result.setCode("200");

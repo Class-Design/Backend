@@ -39,11 +39,13 @@ public interface UserService {
      */
     List<UserDO> queryUser(List<Long> userIds);
 
+    Result<UserGeneral> getInfo(HttpServletRequest request);
+
     /**
      * 判断是否登录
      *
      * @param request
      * @return
      */
-    AuthorityDTO checkLogin(HttpServletRequest request);
+    Boolean checkLogin(HttpServletRequest request);
 }
