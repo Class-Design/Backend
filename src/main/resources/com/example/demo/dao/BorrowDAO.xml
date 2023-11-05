@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.BorrowDAO">
+    <resultMap id="BookDetailResultMap" type="com.example.demo.model.dataobject.BookDetailDO">
+        <id column="id" property="id"/>
+        <result column="book_id" property="bookId"/>
+        <result column="detail_id" property="detailId"/>
+        <result column="status" property="status"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+    <select id="bookReserve" resultMap="BookDetailResultMap">
+        SELECT a.id,
+               a.book_id,
+               a.detail_id,
+               a.status,
+               a.remark
+        FROM book_details AS a
+                 LEFT JOIN borrows AS b ON a.book_id = b.book_id
+        WHERE b.book_id IS NULL
+          AND a.status = 1
+          AND a.book_id = #{bookId} LIMIT 1
+    </select>
+
+    <insert id="borrow" parameterType="com.example.demo.model.dataobject.BorrowDO" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO borrows
+            (book_id, user_id, detail_id)
+        VALUES (#{book_id}, #{user_id}, #{detail_id})
+    </insert>
+
+    <delete id="returBook" parameterType="com.example.demo.model.dataobject.BorrowDO">
+        DELETE
+        FROM borrows
+        WHERE book_id = #{bookId}
+          AND user_id = #{userId}
+          AND detail_id = #{detailId}
+    </delete>
+
+</mapper>
