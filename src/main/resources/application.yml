@@ -10,6 +10,10 @@ spring:
       host: 81.70.240.186
       port: 6379
       password: 114514
+  mail:
+    host: smtp.qq.com
+    username: 3212761752@qq.com
+    password: cbmkpalxggkadeea
 mybatis:
   mapper-locations: classpath:com/example/demo/dao/*.xml
 server:
