@@ -14,6 +14,7 @@ public class BookDO {
     String bookId;
     String name;
     String author;
+    String publisher;
     Double price;
     Date publish;
     Integer reserve;

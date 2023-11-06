@@ -15,8 +15,10 @@ public class BookDTO {
     String bookId;
     String name;
     String author;
+    String publisher;
     Double price;
     Date publish;
+    Integer status;
     Integer reserve;
     public BookDO toDO() {
         BookDO bookDO = new BookDO();
