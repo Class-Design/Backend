@@ -7,6 +7,7 @@
         <result column="book_id" property="bookId"/>
         <result column="name" property="name"/>
         <result column="author" property="author"/>
+        <result column="publisher" property="publisher"/>
         <result column="price" property="price"/>
         <result column="publish" property="publish"/>
         <result column="reserve" property="reserve"/>
@@ -19,12 +20,12 @@
         <result column="remark" property="remark"/>
     </resultMap>
 
-    <sql id="book_base">book_id,name,author,price,publish,reserve</sql>
+    <sql id="book_base">book_id,name,author,price,publish,publisher,reserve</sql>
     <sql id="book_detail_base">book_id,detail_id,status,remark</sql>
     <insert id="addBook" parameterType="com.example.demo.model.dataobject.BookDO" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO books
         (<include refid="book_base"/>)
-        VALUES(#{bookId},#{name},#{author},#{price},#{publish},#{reserve})
+        VALUES(#{bookId},#{name},#{author},#{price},#{publish},#{publisher},#{reserve})
     </insert>
     <insert id="addBookDetail" parameterType="com.example.demo.model.dataobject.BookDetailDO" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO book_details
@@ -34,23 +35,22 @@
     <update id="updateBook" parameterType="com.example.demo.model.dataobject.BookDO">
         UPDATE books
         <set>
-            <if test="bookId != null">book_id=#{bookId}</if>
             <if test="name != null">name=#{name}</if>
             <if test="author != null">author=#{author}</if>
             <if test="price != null">price=#{price}</if>
+            <if test="publisher != null">publisher=#{publisher}</if>
             <if test="publish != null">publish=#{publish}</if>
             <if test="reserve != null">reserve=#{reserve}</if>
         </set>
-        WHERE id=#{id}
+        WHERE bookId=#{bookId}
     </update>
     <update id="updateBookDetail" parameterType="com.example.demo.model.dataobject.BookDetailDO">
         UPDATE book_details
         <set>
-            <if test="bookId!=null">book_id=#{bookId}</if>
             <if test="detailId!=null">detail_id=#{detailId}</if>
             <if test="status!=null">status=#{status}</if>
             <if test="remark!=null">remark=#{remark}</if>
         </set>
-        WHERE id=#{id}
+        WHERE bookId=#{bookId}
     </update>
 </mapper>

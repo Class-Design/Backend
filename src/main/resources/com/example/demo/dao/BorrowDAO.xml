@@ -9,6 +9,7 @@
         <result column="status" property="status"/>
         <result column="remark" property="remark"/>
     </resultMap>
+
     <select id="bookReserve" resultMap="BookDetailResultMap">
         SELECT a.id,
                a.book_id,
