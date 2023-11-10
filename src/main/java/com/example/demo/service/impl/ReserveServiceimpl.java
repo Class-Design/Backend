@@ -6,6 +6,7 @@ import com.example.demo.model.dataobject.ReserveDO;
 import com.example.demo.model.dto.ReserveDTO;
 import com.example.demo.model.pojo.Result;
 import com.example.demo.service.ReserveService;
+import com.example.demo.utils.MailUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,11 +62,6 @@ public class ReserveServiceimpl implements ReserveService {
 
     @Override
     public Integer notice(String bookId) {
-        List<ReserveDO> reserveDOS=reserveDAO.searchByBookId(bookId);
-        for (ReserveDO reserveDO:reserveDOS){
-            //这里写通知方法
-
-        }
-        return reserveDOS.size();
+        return MailUtils.sendMails(bookId);
     }
 }

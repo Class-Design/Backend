@@ -4,6 +4,9 @@ import com.example.demo.model.dataobject.BookDetailDO;
 import com.example.demo.model.dataobject.BorrowDO;
 import com.example.demo.model.dto.BookDetailDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @author fireinsect
@@ -36,4 +39,11 @@ public interface BorrowDAO {
      * @return
      */
     Integer returBook(BorrowDO borrowDO);
+
+    /**
+     * 通过userId搜索借阅的书
+     * @param userId
+     * @return
+     */
+    List<BorrowDO> searchByUserId(@Param("userId")String userId);
 }

@@ -37,6 +37,33 @@ public class UserServiceImpl implements UserService {
     private AuthorityDAO authorityDAO;
 
     @Override
+    public Result updateDetail(UserGeneral userGeneral) {
+        Result result=new Result();
+        userDetailDAO.update(userGeneral.getUserDetail());
+        authorityDAO.update(userGeneral.getAuthority());
+        result.setCode("200");
+        result.setSuccess(true);
+        return result;
+    }
+
+    @Override
+    public Result<List<UserGeneral>> getList() {
+        Result<List<UserGeneral>> result=new Result<>();
+        List<UserGeneral> data=new ArrayList<>();
+        List<UserDetailDO> userDetailDOS=userDetailDAO.getList();
+        for (UserDetailDO userDetailDO:userDetailDOS){
+            UserGeneral userGeneral=new UserGeneral();
+            userGeneral.setUserDetail(userDetailDO);
+            userGeneral.setAuthority(authorityDAO.selectByUserId(userDetailDO.getUserId()));
+            data.add(userGeneral);
+        }
+        result.setData(data);
+        result.setCode("200");
+        result.setSuccess(true);
+        return result;
+    }
+
+    @Override
     public Result<UserGeneral> register(UserDTO userDTO) {
         Result<UserGeneral> result = new Result<>();
 
@@ -63,7 +90,7 @@ public class UserServiceImpl implements UserService {
 
         AuthorityDO authorityDO=new AuthorityDO();
         authorityDO.setUserId(userDO1.getUserId());
-        authorityDO.setAuthority(0);
+        authorityDO.setAuthority(1);
         authorityAdd(authorityDO);
 
         UserGeneral userGeneral =new UserGeneral(userDetailDO,authorityDO);

@@ -23,10 +23,27 @@
         </where>
         limit 1
     </select>
+    <select id="getList" resultMap="userDetailResultMap">
+        select
+            <include refid="base"/>
+        from user_details
+    </select>
     <insert id="add" parameterType="com.example.demo.model.dataobject.UserDetailDO" useGeneratedKeys="true" keyProperty="id">
         insert into user_details
         (<include refid="base"></include>)
         values
         (<include refid="value"></include>)
     </insert>
+    <update id="update" parameterType="com.example.demo.model.dataobject.UserDetailDO">
+        update user_details
+        <set>
+            <if test="name!=null">name=#{name},</if>
+            <if test="classs!=null">class=#{classs},</if>
+            <if test="sex!=null">sex=#{sex},</if>
+            <if test="age!=null">age=#{age},</if>
+            <if test="location!=null">location=#{location},</if>
+            <if test="mobile!=null">mobile=#{mobile},</if>
+        </set>
+        where user_id=#{userId}
+    </update>
 </mapper>

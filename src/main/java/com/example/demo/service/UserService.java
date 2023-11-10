@@ -14,6 +14,12 @@ import java.util.List;
  * @create 2023/11/1
  */
 public interface UserService {
+    public Result updateDetail(UserGeneral userGeneral);
+    /**
+     * 获得user列表
+     * @return
+     */
+    public Result<List<UserGeneral>> getList();
     /**
      * 注册用户
      *

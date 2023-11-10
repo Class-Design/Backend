@@ -3,6 +3,7 @@ package com.example.demo.model.dto;
 import com.example.demo.model.dataobject.BookDO;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -17,7 +18,12 @@ public class BookDTO {
     String author;
     String publisher;
     Double price;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     Date publish;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    Date publishStartTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    Date publishEndTime;
     Integer status;
     Integer reserve;
     public BookDO toDO() {

@@ -2,7 +2,12 @@ package com.example.demo.dao;
 
 import com.example.demo.model.dataobject.BookDO;
 import com.example.demo.model.dataobject.BookDetailDO;
+import com.example.demo.model.dto.BookDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author firesect
@@ -14,6 +19,9 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface BookDAO {
+    BookDO searchByBookId(@Param("bookId")String bookId);
+    List<BookDetailDO> listDetail(String bookId);
+    List<BookDO> list(BookDTO bookDTO);
     /**
      * 未完成sql
      * 根据传入直接添加数据，注意自增主键

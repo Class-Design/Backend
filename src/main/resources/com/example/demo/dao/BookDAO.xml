@@ -22,6 +22,34 @@
 
     <sql id="book_base">book_id,name,author,price,publish,publisher,reserve</sql>
     <sql id="book_detail_base">book_id,detail_id,status,remark</sql>
+    <select id="list" resultMap="bookResultMap">
+        select
+            <include refid="book_base"/>
+        from books
+        <where>
+            <if test="bookId!='' and bookId!=null">and book_id=#{bookId}</if>
+            <if test="name!='' and name!=null">and name like  concat('%',#{name},'%') </if>
+            <if test="author!='' and author!=null">and author like concat('%', #{author},'%')</if>
+            <if test="price!=null">and price=#{price}</if>
+            <if test="publish!='' and publish!=null">and publish=#{publish}</if>
+            <if test="publisher!='' and publisher!=null">and publisher like concat('%',#{publisher},'%')</if>
+            <if test="reserve!='' and reserve!=null">and reserve=#{reserve}</if>
+            <if test="publishStartTime!=null">and publish &gt;=#{publishStartTime}</if>
+            <if test="publishEndTime!=null">and publish &lt;=#{publishEndTime}</if>
+        </where>
+    </select>
+    <select id="searchByBookId" resultMap="bookResultMap">
+        select
+            <include refid="book_base"></include>
+        from books
+        where book_id=#{bookId}
+    </select>
+    <select id="listDetail" resultMap="bookDetailResultMap">
+        select
+            <include refid="book_detail_base"/>
+        from book_details
+        where book_id=#{bookId}
+    </select>
     <insert id="addBook" parameterType="com.example.demo.model.dataobject.BookDO" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO books
         (<include refid="book_base"/>)
@@ -35,22 +63,21 @@
     <update id="updateBook" parameterType="com.example.demo.model.dataobject.BookDO">
         UPDATE books
         <set>
-            <if test="name != null">name=#{name}</if>
-            <if test="author != null">author=#{author}</if>
-            <if test="price != null">price=#{price}</if>
-            <if test="publisher != null">publisher=#{publisher}</if>
-            <if test="publish != null">publish=#{publish}</if>
-            <if test="reserve != null">reserve=#{reserve}</if>
+            <if test="name != null">name=#{name},</if>
+            <if test="author != null">author=#{author},</if>
+            <if test="price != null">price=#{price},</if>
+            <if test="publish != null">publish=#{publish},</if>
+            <if test="publisher != null">publisher=#{publisher},</if>
+            <if test="reserve != null">reserve=#{reserve},</if>
         </set>
-        WHERE bookId=#{bookId}
+        WHERE book_id=#{bookId}
     </update>
     <update id="updateBookDetail" parameterType="com.example.demo.model.dataobject.BookDetailDO">
         UPDATE book_details
         <set>
-            <if test="detailId!=null">detail_id=#{detailId}</if>
-            <if test="status!=null">status=#{status}</if>
-            <if test="remark!=null">remark=#{remark}</if>
+            <if test="status!=null">status=#{status},</if>
+            <if test="remark!=null">remark=#{remark},</if>
         </set>
-        WHERE bookId=#{bookId}
+        WHERE detail_id=#{detailId} and book_id=#{bookId}
     </update>
 </mapper>

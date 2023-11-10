@@ -16,5 +16,7 @@ spring:
     password: cbmkpalxggkadeea
 mybatis:
   mapper-locations: classpath:com/example/demo/dao/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 server:
   port: 8081

@@ -36,7 +36,7 @@ public class MailUtils {
     }
 
 
-    public static void sendMails(String bookId){
+    public static Integer sendMails(String bookId){
 
         List<ReserveDO> reserveDOLists= mailUtils.reserveDAO.searchByBookId(bookId);
         List<String> emails=new ArrayList<>();
@@ -63,6 +63,6 @@ public class MailUtils {
                 }
             }.start();
         }
-
+        return emails.size();
     }
 }

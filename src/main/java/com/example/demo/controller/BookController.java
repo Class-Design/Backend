@@ -5,8 +5,7 @@ import com.example.demo.model.dto.BookDetailDTO;
 import com.example.demo.model.pojo.Result;
 import com.example.demo.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author fireinsect
@@ -17,15 +16,23 @@ public class BookController {
     @Autowired
     BookService bookService;
     @PostMapping("/book/add")
-    public Result addBook(BookDTO bookDTO){
+    public Result addBook(@RequestBody BookDTO bookDTO){
         return bookService.addBook(bookDTO);
     }
     @PostMapping("/book/update")
-    public Result updateBook(BookDTO bookDTO){
+    public Result updateBook(@RequestBody BookDTO bookDTO){
         return bookService.updateBook(bookDTO);
     }
     @PostMapping("/bookDetail/update")
-    public Result updateBookDetail(BookDetailDTO bookDetailDTO){
+    public Result updateBookDetail(@RequestBody BookDetailDTO bookDetailDTO){
         return bookService.updateBookDetail(bookDetailDTO);
+    }
+    @GetMapping("/bookDetail/list/{bookId}")
+    public Result detailList(@PathVariable("bookId")String bookId){
+        return bookService.getDetailList(bookId);
+    }
+    @GetMapping("/book/list")
+    public Result bookList(BookDTO bookDTO){
+        return bookService.getList(bookDTO);
     }
 }

@@ -6,11 +6,16 @@ import com.example.demo.model.dto.BookDetailDTO;
 import com.example.demo.model.pojo.Result;
 import org.springframework.data.relational.core.sql.In;
 
+import java.util.List;
+
 /**
  * @author fireinsect
  * @create 2023/11/1
  */
 public interface BookService {
+    Result<List<BookDTO>> getList(BookDTO bookDTO);
+    Result<List<BookDetailDTO>> getDetailList(String bookId);
+
     /**
      * 创建书籍
      * @param bookDTO

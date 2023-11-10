@@ -24,4 +24,11 @@
         </where>
         limit 1
     </select>
+    <update id="update" parameterType="com.example.demo.model.dataobject.AuthorityDO">
+        update authority
+        <set>
+            <if test="authority!=null">authority=#{authority},</if>
+        </set>
+        where user_id=#{userId}
+    </update>
 </mapper>

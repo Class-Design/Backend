@@ -12,4 +12,6 @@ import org.apache.ibatis.annotations.Param;
 public interface AuthorityDAO {
     Integer add(AuthorityDO authorityDO);
     AuthorityDO selectByUserId(@Param("userId")String userId);
+
+    Integer update(AuthorityDO authorityDO);
 }

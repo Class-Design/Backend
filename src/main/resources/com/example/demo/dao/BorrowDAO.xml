@@ -9,7 +9,12 @@
         <result column="status" property="status"/>
         <result column="remark" property="remark"/>
     </resultMap>
-
+    <resultMap id="BorrowResultMap" type="com.example.demo.model.dataobject.BorrowDO">
+        <result column="book_id" property="bookId"/>
+        <result column="detail_id" property="detailId"/>
+        <result column="user_id" property="userId"/>
+    </resultMap>
+    <sql id="borrow_base">book_id,user_id,detail_id</sql>
     <select id="bookReserve" resultMap="BookDetailResultMap">
         SELECT a.id,
                a.book_id,
@@ -22,12 +27,19 @@
           AND a.status = 1
           AND a.book_id = #{bookId} LIMIT 1
     </select>
+    <select id="searchByUserId" resultMap="BorrowResultMap">
+        select
+        <include refid="borrow_base"/>
+        from borrows
+        where
+            user_id=#{userId}
+    </select>
 
     <insert id="borrow" parameterType="com.example.demo.model.dataobject.BorrowDO" useGeneratedKeys="true"
             keyProperty="id">
         INSERT INTO borrows
             (book_id, user_id, detail_id)
-        VALUES (#{book_id}, #{user_id}, #{detail_id})
+        VALUES (#{bookId}, #{userId}, #{detailId})
     </insert>
 
     <delete id="returBook" parameterType="com.example.demo.model.dataobject.BorrowDO">

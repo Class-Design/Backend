@@ -130,4 +130,13 @@ public class UserController {
         result.setData(userService.checkLogin(request));
         return result;
     }
+    @GetMapping("/user/getList")
+    public Result getList(){
+        return userService.getList();
+    }
+
+    @PostMapping("/userDetail/update")
+    public Result updateDetail(@RequestBody UserGeneral userGeneral){
+        return userService.updateDetail(userGeneral);
+    }
 }
