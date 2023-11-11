@@ -68,21 +68,38 @@ public class UserServiceImpl implements UserService {
         Result<UserGeneral> result = new Result<>();
 
         if (StringUtils.isEmpty(userDTO.getUserName())) {
-            result.setCode("600");
+            result.setCode("601");
             result.setMessage("用户名不能为空");
+            result.setSuccess(false);
             return result;
         }
         if (StringUtils.isEmpty(userDTO.getPassword())) {
             result.setCode("601");
             result.setMessage("密码不能为空");
+            result.setSuccess(false);
+            return result;
+        }
+        if(StringUtils.isEmpty(userDTO.getMobile())){
+            result.setCode("601");
+            result.setMessage("邮箱地址不能为空");
+            result.setSuccess(false);
             return result;
         }
         UserDO userDO = userDAO.findByUserName(userDTO.getUserName());
         if (userDO != null) {
             result.setCode("602");
             result.setMessage("用户名已经存在");
+            result.setSuccess(false);
             return result;
         }
+        /**
+         * 信息初始化
+         */
+        userDTO.setAge(0);
+        userDTO.setClasss("未知");
+        userDTO.setLocation("未知");
+        userDTO.setName("新用户");
+        userDTO.setSex("男");
         UserDO userDO1=userAdd(userDTO);
         UserDetailDO userDetailDO=userDTO.toDetailDO();
         userDetailDO.setUserId(userDO1.getUserId());
