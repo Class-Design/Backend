@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.PublisherDAO">
+    <resultMap id="PublisherResultMap" type="com.example.demo.model.dataobject.PublisherDO">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="mobile" property="mobile"/>
+    </resultMap>
+    <sql id="publish_base">id,name,mobile</sql>
+    <select id="getByName"  resultMap="PublisherResultMap">
+        select
+        <include refid="publish_base"/>
+        from publisher
+        where name=#{name}
+    </select>
+
+
+</mapper>

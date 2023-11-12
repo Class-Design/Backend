@@ -35,6 +35,16 @@
             user_id=#{userId}
     </select>
 
+    <select id="list" resultMap="BorrowResultMap">
+        select
+        <include refid="borrow_base"/>
+        from borrows
+        <where>
+            <if test="userId!='' and userId!=null">and user_id=#{userId}</if>
+            <if test="bookId!='' and bookId!=null">and book_id=#{bookId}</if>
+        </where>
+    </select>
+
     <insert id="borrow" parameterType="com.example.demo.model.dataobject.BorrowDO" useGeneratedKeys="true"
             keyProperty="id">
         INSERT INTO borrows

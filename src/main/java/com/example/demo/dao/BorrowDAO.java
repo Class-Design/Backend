@@ -3,6 +3,7 @@ package com.example.demo.dao;
 import com.example.demo.model.dataobject.BookDetailDO;
 import com.example.demo.model.dataobject.BorrowDO;
 import com.example.demo.model.dto.BookDetailDTO;
+import com.example.demo.model.dto.BorrowDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -46,4 +47,10 @@ public interface BorrowDAO {
      * @return
      */
     List<BorrowDO> searchByUserId(@Param("userId")String userId);
+
+    /**
+     * 获取列表
+     * @return
+     */
+    List<BorrowDO> list(BorrowDTO borrowDTO);
 }
